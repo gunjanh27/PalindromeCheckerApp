@@ -1,15 +1,28 @@
 public class PalindromeCheckerApp {
     public static void main (String[] args){
-        String original = "racecar";
-        String reversed = "";
-        for (int i = original.length() - 1; i >= 0; i--) {
-            reversed = reversed + original.charAt(i);
-        }
-        if (original.equals(reversed)) {
-            System.out.println(original + " is a palindrome.");
-        } else {
-            System.out.println(original + " is not a palindrome.");
-        }
+                String input = "deified";
 
+                char[] charArray = input.toCharArray();
+
+                boolean isPalindrome = true;
+
+                int left = 0;
+                int right = charArray.length - 1;
+
+                while (left < right) {
+
+                    if (charArray[left] != charArray[right]) {
+                        isPalindrome = false;
+                        break;
+                    }
+                    left++;
+                    right--;
+                }
+
+                if (isPalindrome) {
+                    System.out.println("'" + input + "' is a palindrome.");
+                } else {
+                    System.out.println("'" + input + "' is not a palindrome.");
+                }
     }
 }
