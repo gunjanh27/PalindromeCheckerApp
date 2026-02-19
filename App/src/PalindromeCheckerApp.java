@@ -1,13 +1,14 @@
 public class PalindromeCheckerApp {
     public static void main (String[] args){
-        String original = "madam";
-
-        String reversed = new StringBuilder(original).reverse().toString();
-
-        if (original.equalsIgnoreCase(reversed)) {
-            System.out.println("The string '" + original + "' is a palindrome.");
+        String original = "racecar";
+        String reversed = "";
+        for (int i = original.length() - 1; i >= 0; i--) {
+            reversed = reversed + original.charAt(i);
+        }
+        if (original.equals(reversed)) {
+            System.out.println(original + " is a palindrome.");
         } else {
-            System.out.println("The string '" + original + "' is NOT a palindrome.");
+            System.out.println(original + " is not a palindrome.");
         }
 
     }
