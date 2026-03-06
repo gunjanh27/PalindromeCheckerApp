@@ -2,32 +2,21 @@ import java.util.*;
 public class PalindromeCheckerApp {
     public static void main (String[] args){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter a string:");
-        String input = scanner.nextLine();
-        System.out.println("Choose strategy:");
-        System.out.println("1. Stack Strategy");
-        System.out.println("2. Deque Strategy");
-        int choice = scanner.nextInt();
-        PalindromeStrategy strategy;
-        if (choice == 1) {
-            strategy = new StackStrategy();
-        } else {
-            strategy = new DequeStrategy();
-        }
-        boolean result = strategy.check(input);
-        if (result) {
-            System.out.println("Palindrome");
-        } else {
-            System.out.println("Not a Palindrome");
-        }
-        scanner.close();
+        String input = "madam";
+        long start1 = System.nanoTime();
+        boolean result1 = checkUsingStack(input);
+        long end1 = System.nanoTime();
+        long start2 = System.nanoTime();
+        boolean result2 = checkUsingDeque(input);
+        long end2 = System.nanoTime();
+        long stackTime = end1 - start1;
+        long dequeTime = end2 - start2;
+        System.out.println("Stack Result: " + result1);
+        System.out.println("Stack Time (ns): " + stackTime);
+        System.out.println("Deque Result: " + result2);
+        System.out.println("Deque Time (ns): " + dequeTime);
     }
-}
-interface PalindromeStrategy {
-    boolean check(String input);
-}
-class StackStrategy implements PalindromeStrategy {
-    public boolean check(String input) {
+    public static boolean checkUsingStack(String input) {
         Stack<Character> stack = new Stack<>();
         for (char c : input.toCharArray()) {
             stack.push(c);
@@ -39,9 +28,7 @@ class StackStrategy implements PalindromeStrategy {
         }
         return true;
     }
-}
-class DequeStrategy implements PalindromeStrategy {
-    public boolean check(String input) {
+    public static boolean checkUsingDeque(String input) {
         Deque<Character> deque = new ArrayDeque<>();
         for (char c : input.toCharArray()) {
             deque.addLast(c);
