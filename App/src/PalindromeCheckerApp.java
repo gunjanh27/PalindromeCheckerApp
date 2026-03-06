@@ -2,29 +2,54 @@ import java.util.*;
 public class PalindromeCheckerApp {
     public static void main (String[] args){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("==== Palindrome Checker App ====");
-        System.out.print("Enter a string: ");
+        System.out.println("Enter a string:");
         String input = scanner.nextLine();
-        PalindromeService palindromeService = new PalindromeService();
-        boolean result = palindromeService.checkPalindrome(input);
-        if (result) {
-            System.out.println("Result: The string is a PALINDROME.");
+        System.out.println("Choose strategy:");
+        System.out.println("1. Stack Strategy");
+        System.out.println("2. Deque Strategy");
+        int choice = scanner.nextInt();
+        PalindromeStrategy strategy;
+        if (choice == 1) {
+            strategy = new StackStrategy();
         } else {
-            System.out.println("Result: The string is NOT a palindrome.");
+            strategy = new DequeStrategy();
+        }
+        boolean result = strategy.check(input);
+        if (result) {
+            System.out.println("Palindrome");
+        } else {
+            System.out.println("Not a Palindrome");
         }
         scanner.close();
     }
 }
-class PalindromeService {
-    public boolean checkPalindrome(String input) {
-        int start = 0;
-        int end = input.length() - 1;
-        while (start < end) {
-            if (input.charAt(start) != input.charAt(end)) {
+interface PalindromeStrategy {
+    boolean check(String input);
+}
+class StackStrategy implements PalindromeStrategy {
+    public boolean check(String input) {
+        Stack<Character> stack = new Stack<>();
+        for (char c : input.toCharArray()) {
+            stack.push(c);
+        }
+        for (char c : input.toCharArray()) {
+            if (c != stack.pop()) {
                 return false;
             }
-            start++;
-            end--;
+        }
+        return true;
+    }
+}
+class DequeStrategy implements PalindromeStrategy {
+    public boolean check(String input) {
+        Deque<Character> deque = new ArrayDeque<>();
+        for (char c : input.toCharArray()) {
+            deque.addLast(c);
+        }
+        while (deque.size() > 1) {
+            if (!deque.removeFirst().equals(deque.removeLast())) {
+                return false;
+            }
         }
         return true;
     }
